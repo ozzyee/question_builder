@@ -8,12 +8,14 @@ export default function Home() {
 	const {drop, allowDrop} = DragAndDrop;
 
 	useEffect(() => {
-		window.addEventListener('drop', ScreenObserver.observe);
-		window.addEventListener("input", ScreenObserver.observe)
+		window.addEventListener('drop', ScreenObserver.onChangeObserve);
+		window.addEventListener("input", ScreenObserver.onChangeObserve)
+		window.addEventListener("click", ScreenObserver.onClickObserver)
 
 		return () => {
-			window.removeEventListener('drop', ScreenObserver.observe);
-			window.removeEventListener("input", ScreenObserver.observe)
+			window.removeEventListener('drop', ScreenObserver.onChangeObserve);
+			window.removeEventListener("input", ScreenObserver.onChangeObserve)
+			window.removeEventListener("click", ScreenObserver.onClickObserver)
 		}
 	}, [])
 

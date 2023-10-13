@@ -34,6 +34,7 @@ export class DragAndDrop {
 			const answers = document.getElementById("answers")
 
 			component.setAttribute("id", uuidv4())
+			component.getElementsByClassName("answer-delete-btn")[0].setAttribute("id", "answer-delete-btn")
 
 			if (answers) {
 				answers.appendChild(component)

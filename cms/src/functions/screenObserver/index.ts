@@ -5,7 +5,7 @@ import {parseAnswers} from "@/functions/screenObserver/methods/parseAnswers";
 export class ScreenObserver {
 	private static questionnaireJson: {};
 
-	static observe() {
+	static onChangeObserve() {
 		const dropzone = document.getElementById('dropzone');
 		const innerHtml = dropzone?.innerHTML;
 
@@ -22,6 +22,16 @@ export class ScreenObserver {
 		}
 
 		console.log(ScreenObserver.questionnaireJson)
+	}
+
+	static onClickObserver(ev) {
+
+		if (ev.target.id == "answer-delete-btn") {
+			// todo refactor this at some point
+			const parentNode = ev.target.parentNode
+			const mainParent = parentNode.parentNode.parentNode
+			mainParent.remove()
+		}
 	}
 }
 
