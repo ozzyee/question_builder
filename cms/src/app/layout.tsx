@@ -7,28 +7,23 @@ import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 import {navigation, tiles as _tiles} from "@/_data/sideNav";
 import {classNames} from "@/functions/_helper/tailwind";
 import {Tile} from "@/components/drag/tile";
+import Link from "next/link";
+import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
+import SideNav from "@/components/side-nav";
 
 const inter = Inter({subsets: ['latin']})
 
 export default function RootLayout({children}: { children: ReactNode }) {
+	const defaultPanel = "layouts"
+	const params = useSearchParams()
+	const router = useRouter()
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [tiles, setTiles] = useState(_tiles);
 
 	useEffect(() => {
-		const handleDrop = () => {
-			const heading = document.querySelector("[data-component='heading']");
-
-			if (!heading) return;
-
-			const removedHeadingTile = tiles.filter(tile => tile.componentType !== "Heading");
-			setTiles(removedHeadingTile);
-		};
-
-		document.addEventListener("drop", handleDrop);
-
-		return () => {
-			document.removeEventListener("drop", handleDrop);
-		};
+		if (!params.get("panel")) {
+			router.push(`/?panel=${defaultPanel}`)
+		}
 	}, []);
 
 
@@ -89,22 +84,26 @@ export default function RootLayout({children}: { children: ReactNode }) {
 											 </div>
 											 <nav className="flex flex-1 flex-col">
 												 <ul role="list" className="-mx-2 flex-1 space-y-1">
-													 {navigation.map((item) => (
-															<li key={item.name}>
-																<a
-																	 href={item.href}
-																	 className={classNames(
-																			item.current
-																				 ? 'bg-gray-800 text-white'
-																				 : 'text-gray-400 hover:text-white hover:bg-gray-800',
-																			'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-																	 )}
-																>
-																	<item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
-																	{item.name}
-																</a>
-															</li>
-													 ))}
+													 {navigation.map((item) => {
+														 const panel = params.get("panel");
+
+														 return (
+																<li key={item.name}>
+																	<Link
+																		 href={item.href}
+																		 className={classNames(
+																				item.panel === panel
+																					 ? 'bg-gray-800 text-white'
+																					 : 'text-gray-400 hover:text-white hover:bg-gray-800',
+																				'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+																		 )}
+																	>
+																		<item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
+																		{item.name}
+																	</Link>
+																</li>
+														 )
+													 })}
 												 </ul>
 											 </nav>
 										 </div>
@@ -126,20 +125,24 @@ export default function RootLayout({children}: { children: ReactNode }) {
 						 </div>
 						 <nav className="mt-8">
 							 <ul role="list" className="flex flex-col items-center space-y-1">
-								 {navigation.map((item) => (
-										<li key={item.name}>
-											<a
-												 href={item.href}
-												 className={classNames(
-														item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
-														'group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold'
-												 )}
-											>
-												<item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
-												<span className="sr-only">{item.name}</span>
-											</a>
-										</li>
-								 ))}
+								 {navigation.map((item) => {
+									 const panel = params.get("panel");
+
+									 return (
+											<li key={item.name}>
+												<Link
+													 href={item.href}
+													 className={classNames(
+															item.panel === panel ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
+															'group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold'
+													 )}
+												>
+													<item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
+													<span className="sr-only">{item.name}</span>
+												</Link>
+											</li>
+									 )
+								 })}
 							 </ul>
 						 </nav>
 					 </div>
@@ -167,18 +170,7 @@ export default function RootLayout({children}: { children: ReactNode }) {
 					 </div>
 					 <aside className="fixed xl:pl-20 inset-y-0 hidden w-96 px-4 xl:block bg-gray-800">
 						 {/*this is the wide side nav in the lighter color*/}
-						 <div className={"ms-4 pt-4 flex flex-col"}>
-							 <h2 className="text-2xl font-bold leading-7 text-white sm:truncate sm:text-2xl sm:tracking-tight">
-								 Components
-							 </h2>
-							 <div className={"flex flex-wrap pt-5"}>
-								 {tiles.map(({name, icon, componentType}) => {
-									 return (
-											<Tile Icon={icon} name={name} componentType={componentType} key={name}/>
-									 )
-								 })}
-							 </div>
-						 </div>
+						 <SideNav/>
 					 </aside>
 				 </div>
 			 </body>

@@ -1,6 +1,4 @@
 import {DragEvent} from "react";
-import {Components} from "@/functions/dragAndDrop/methods/components";
-import {v4 as uuidv4 } from "uuid";
 
 export class DragAndDrop {
 	static drag(ev: DragEvent<HTMLDivElement> | undefined) {
@@ -24,36 +22,6 @@ export class DragAndDrop {
 		if (!ev) return;
 
 		ev.preventDefault();
-		const componentName = ev.dataTransfer.getData("component");
-		const component = Components.getComponent(componentName);
-
-
-		if (!component || !(ev.target instanceof HTMLElement)) return;
-
-		if (componentName == "Answer") {
-			const answers = document.getElementById("answers")
-
-			component.setAttribute("id", uuidv4())
-			component.getElementsByClassName("answer-delete-btn")[0].setAttribute("id", "answer-delete-btn")
-
-			if (answers) {
-				answers.appendChild(component)
-				return;
-			}
-
-			const div = document.createElement("div")
-			div.setAttribute("id", "answers");
-			div.setAttribute("class", "flex flex-wrap items-center content-center")
-			div.appendChild(component)
-
-			ev.target.appendChild(div)
-			return;
-		}
-
-		if (componentName == "Heading") {
-			const dropzone = document.getElementById("dropzone")
-			dropzone?.insertBefore(component, dropzone?.firstChild || null)
-			return;
-		}
+		return ev.dataTransfer.getData("component");
 	}
 }
