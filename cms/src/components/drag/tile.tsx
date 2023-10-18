@@ -24,3 +24,25 @@ export const Tile = ({name, Icon, componentType}: TileProps) => {
 		 </div>
 	)
 }
+
+type LongTileProps = {
+	name: string
+	onClicked: () => void
+	active: boolean
+}
+
+export const LongTile = ({name, onClicked, active}) => {
+	return (
+		 <div className="flex-item w-[100%] p-1" onClick={onClicked}>
+			 <div className={
+				 `h-10 text-center flex flex-col justify-center items-start ps-4 shadow-md rounded-md cursor-pointer ${
+						active
+							 ? 'bg-gray-800 border border-gray-900 border text-white'
+							 : 'bg-white text-gray-900 border border-gray-900'
+				 }`
+			 }>
+				 <p>{name}</p>
+			 </div>
+		 </div>
+	)
+}

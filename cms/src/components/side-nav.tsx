@@ -1,20 +1,38 @@
+"use client"
 import React, {useEffect, useState} from 'react';
-import {Tile} from "@/components/drag/tile";
+import {LongTile, Tile} from "@/components/drag/tile";
 import {tiles} from "@/_data/sideNav";
-import {useSearchParams} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import LocalStorage from "@/functions/localStorage";
+import {projectKey} from "@/app/page";
 
 const SideNav = () => {
+	const router = useRouter()
+	const path = usePathname()
 	const params = useSearchParams()
 	const [_tiles, setTiles] = useState([]);
 	const [title, setTitle] = useState("");
+	const panel = params.get("panel")
 
 	useEffect(() => {
-		const panel = params.get("panel")
-		if(!panel) return;
-
+		if (!panel) return;
 		setTiles(tiles[panel])
 		setTitle(panel.charAt(0).toUpperCase() + panel.slice(1))
-	}, [params]);
+	}, [params, router, path]);
+
+	useEffect(() => {
+		const localData = LocalStorage.onLoad(projectKey) || {}
+		if (!localData || panel != "pages") return;
+
+		const pages = Object.keys(localData).map((page) => {
+			return {
+				name: page.split("-").join(" "),
+				tileType: "page",
+				link: `/${page}`
+			}
+		})
+		setTiles(pages)
+	}, [router, panel, path]);
 
 	return (
 		 <div>
@@ -23,11 +41,27 @@ const SideNav = () => {
 					 {title}
 				 </h2>
 				 <div className={"flex flex-wrap pt-5"}>
-					 {_tiles.map(({name, icon, componentType}) => {
-						 return (
-								<Tile Icon={icon} name={name} componentType={componentType} key={name}/>
-						 )
+					 {_tiles.map(({name, icon, componentType, tileType, link}) => {
+						 const click = () => {
+							 router.push(`${link}?panel=${params.get("panel")}`)
+						 }
+
+						 if (tileType === "page") {
+							 return (
+									<>
+										<LongTile name={name} onClicked={click} active={path == link}/>
+									</>
+							 )
+						 }
+
+						 return <Tile Icon={icon} name={name} componentType={componentType} key={name}/>
 					 })}
+
+					 {panel == "pages" && (
+							<button
+								 onClick={() => router.push("/?panel=layouts")}
+							>Add Page</button>
+					 )}
 				 </div>
 			 </div>
 		 </div>

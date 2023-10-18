@@ -18,7 +18,6 @@ export default function RootLayout({children}: { children: ReactNode }) {
 	const params = useSearchParams()
 	const router = useRouter()
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [tiles, setTiles] = useState(_tiles);
 
 	useEffect(() => {
 		if (!params.get("panel")) {
