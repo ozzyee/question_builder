@@ -42,17 +42,21 @@ function MainLayout({page}: { page?: string }) {
 
 	const onSave = (pageName: string, _url?: string) => {
 		const localData = LocalStorage.onLoad(projectKey) || {}
-		const oldPageName = page[0]
-		const newPageName = pageName?.split(" ").length > 1 ? pageName.split(" ").join("-") : pageName
+		const oldPageName = page?.length ? page[0] : ""
+		let newPageName = pageName?.split(" ").length > 1 ? pageName.split(" ").join("-") : pageName
+
+		if(!newPageName){
+			newPageName = `new-${uuidv4()}`
+		}
+
 
 		delete localData[oldPageName]
 		localData[newPageName] = json
 
-		console.log({json})
 
 		LocalStorage.onSave(projectKey, localData)
-		const url = `${pageName.split(" ").join("-")}?panel=${params.get("panel")}`
-		router.push(_url || url)
+		const url = `/${pageName.split(" ").join("-") || newPageName}?panel=${params.get("panel")}`
+		router.push(_url ? _url : url)
 		setIsPopUpOpen(false)
 	}
 
@@ -63,7 +67,7 @@ function MainLayout({page}: { page?: string }) {
 					setOpen={setIsPopUpOpen}
 					title={"Saved Page"}
 					acceptText={"Save Page"}
-					inputText={page[0] || ""}
+					inputText={page?.length ? page[0] : ""}
 					onAccept={onSave}
 			 />
 			 <header className="shrink-0 bg-gray-900 z-50">
