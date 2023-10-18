@@ -82,7 +82,13 @@ function QuestionLayout({callBack, subHeading, heading, answers: _answers, conte
 		const updatedAnswers = answers.filter((answer) => answer.id !== id);
 		setAnswers(updatedAnswers);
 		setAnswerHistory((prevHistory) => [...prevHistory, answers]);
-		delete rawQuestionJson[id]
+
+		setRawQuestionJson((prevJson: RawQuestionLayoutJson) => {
+			return {
+				...prevJson,
+				answers: prevJson.answers.filter((answer) => answer.id !== id)
+			} as RawQuestionLayoutJson
+		})
 	}
 
 	const addAnswer = () => {
