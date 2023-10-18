@@ -10,16 +10,19 @@ interface QuestionLayoutProps extends RawQuestionLayoutJson {
 		componentType,
 		id,
 		order,
-		contentId
+		contentId,
+		save
 	}: {
 		data: RawQuestionLayoutJson
 		componentType: string
 		id: string
 		order: number
 		contentId: string
+		save?: boolean
 	}) => void
 	contentId: string
 	order: number
+	redirect: string
 }
 
 export type RawQuestionLayoutJson = {
@@ -31,7 +34,15 @@ export type RawQuestionLayoutJson = {
 	}[]
 }
 
-function QuestionLayout({callBack, subHeading, heading, answers: _answers, contentId, order}: QuestionLayoutProps) {
+function QuestionLayout({
+	callBack,
+	subHeading,
+	heading,
+	answers: _answers,
+	contentId,
+	order,
+	redirect
+}: QuestionLayoutProps) {
 	const placeholders = {
 		heading: "Question Title...",
 		subHeading: "Question Subtitle...",
@@ -116,7 +127,9 @@ function QuestionLayout({callBack, subHeading, heading, answers: _answers, conte
 		setAnswers(previousState);
 	}
 
-	const handlerChange = ({id, component, content}: OnContentChangeEvent) => {
+	const handlerChange = ({id, component, content, redirect}: OnContentChangeEvent) => {
+		console.log("answer content ", content)
+
 		if (component === "answer") {
 			setRawQuestionJson((prevJson: any) => {
 				return {
@@ -126,7 +139,8 @@ function QuestionLayout({callBack, subHeading, heading, answers: _answers, conte
 						if (answer.id === id) {
 							return {
 								...answer,
-								value: content
+								value: content,
+								redirect
 							}
 						}
 						return answer
@@ -154,6 +168,17 @@ function QuestionLayout({callBack, subHeading, heading, answers: _answers, conte
 		}
 	}
 
+	const handleAddNewPage = () => {
+		callBack({
+			save: true,
+			id: contentId,
+			data: rawQuestionJson,
+			componentType: "QuestionLayout",
+			order,
+			contentId
+		})
+	}
+
 	return (
 		 <div>
 			 <Heading
@@ -174,7 +199,8 @@ function QuestionLayout({callBack, subHeading, heading, answers: _answers, conte
 								 onDelete={onAnswerDelete}
 								 onContentChange={handlerChange}
 								 placeholder={answer.value || placeholders.answer}
-							/>
+								 handleAddNewPage={handleAddNewPage}
+								 redirect={answer.redirect}/>
 					 )
 				 })}
 			 </div>

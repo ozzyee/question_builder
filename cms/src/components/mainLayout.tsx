@@ -4,8 +4,8 @@ import {DragAndDrop} from "@/functions/dragAndDrop";
 import LocalStorage from "@/functions/localStorage";
 import {Popup} from "@/components/popup";
 import {v4 as uuidv4} from "uuid";
-import {projectKey} from "@/app/[...page]/page";
 import {RenderComponent} from "@/components/RenderComponent";
+import {projectKey} from "@/app/page";
 
 function MainLayout({page}: { page?: string }) {
 	const router = useRouter()
@@ -40,18 +40,19 @@ function MainLayout({page}: { page?: string }) {
 		setIsPopUpOpen(true)
 	}
 
-	const onSave = (pageName: string) => {
+	const onSave = (pageName: string, _url?: string) => {
 		const localData = LocalStorage.onLoad(projectKey) || {}
-		const oldPageName = params.get("page")
-		const newPageName = pageName.split(" ").join("-")
+		const oldPageName = page[0]
+		const newPageName = pageName?.split(" ").length > 1 ? pageName.split(" ").join("-") : pageName
+
 		delete localData[oldPageName]
 		localData[newPageName] = json
 
-		console.log(json)
+		console.log({json})
 
 		LocalStorage.onSave(projectKey, localData)
 		const url = `${pageName.split(" ").join("-")}?panel=${params.get("panel")}`
-		router.push(url)
+		router.push(_url || url)
 		setIsPopUpOpen(false)
 	}
 
@@ -62,7 +63,7 @@ function MainLayout({page}: { page?: string }) {
 					setOpen={setIsPopUpOpen}
 					title={"Saved Page"}
 					acceptText={"Save Page"}
-					inputText={params.get("page") || ""}
+					inputText={page[0] || ""}
 					onAccept={onSave}
 			 />
 			 <header className="shrink-0 bg-gray-900 z-50">
@@ -103,12 +104,17 @@ function MainLayout({page}: { page?: string }) {
 									 onSave={onPageSaveButtonClick}
 									 callBack={(content) => {
 										 if (!content.id || !content.data) return;
+
 										 setJson((prv) => {
 											 return {
 												 ...prv || {},
 												 [content.id]: content
 											 }
 										 })
+
+										 if (content.save) {
+											 onSave(page[0] || "temp-page", "/?panel=layouts")
+										 }
 									 }}
 									 componentProps={props}
 									 contentId={contentId}
