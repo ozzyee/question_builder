@@ -2,8 +2,9 @@ import {Fragment, useEffect, useState} from 'react'
 import {Listbox, Transition} from '@headlessui/react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import LocalStorage from "@/functions/localStorage";
-import {projectKey} from "@/app/page";
 import {usePathname} from "next/navigation";
+import {projectKey} from "@/_data/defaults";
+
 
 
 function classNames(...classes) {

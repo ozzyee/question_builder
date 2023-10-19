@@ -4,7 +4,7 @@ import {LongTile, Tile} from "@/components/drag/tile";
 import {tiles} from "@/_data/sideNav";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import LocalStorage from "@/functions/localStorage";
-import {projectKey} from "@/app/page";
+import {projectKey} from "@/_data/defaults";
 
 const SideNav = () => {
 	const router = useRouter()

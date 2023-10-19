@@ -5,7 +5,7 @@ import LocalStorage from "@/functions/localStorage";
 import {Popup} from "@/components/popup";
 import {v4 as uuidv4} from "uuid";
 import {RenderComponent} from "@/components/RenderComponent";
-import {projectKey} from "@/app/page";
+import {projectKey} from "@/_data/defaults";
 
 function MainLayout({page}: { page?: string }) {
 	const router = useRouter()
