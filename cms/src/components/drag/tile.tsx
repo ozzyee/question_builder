@@ -1,9 +1,9 @@
 import {DragAndDrop} from "@/functions/dragAndDrop";
-import {ReactNode} from "react";
+import {WindowIcon} from "@heroicons/react/20/solid";
 
 type TileProps = {
 	name: string,
-	Icon: ReactNode
+	Icon: typeof WindowIcon
 	componentType: string
 }
 
@@ -31,7 +31,7 @@ type LongTileProps = {
 	active: boolean
 }
 
-export const LongTile = ({name, onClicked, active}) => {
+export const LongTile = ({name, onClicked, active}: LongTileProps) => {
 	return (
 		 <div className="flex-item w-[100%] p-1" onClick={onClicked}>
 			 <div className={

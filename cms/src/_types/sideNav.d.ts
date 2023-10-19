@@ -1,4 +1,5 @@
 import {ReactNode} from "react";
+import {WindowIcon} from "@heroicons/react/20/solid";
 
 export type SideNavTiles = {
 	name: string
@@ -9,6 +10,6 @@ export type SideNavTiles = {
 export type SideNavNavigation = {
 	name: string
 	href: string
-	icon: ReactNode
+	icon: typeof WindowIcon
 	panel: string
 }
