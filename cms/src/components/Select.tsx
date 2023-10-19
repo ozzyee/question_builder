@@ -4,22 +4,29 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import LocalStorage from "@/functions/localStorage";
 import {usePathname} from "next/navigation";
 import {projectKey} from "@/_data/defaults";
+import {classNames} from "@/functions/_helper/tailwind";
+import {TType} from "ts-interface-checker";
 
-
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
+type SelectProps = {
+	handleAddNewPage: () => void;
+	onChange: (val: TType) => void;
+	value: SelectValue
 }
 
-export default function Select({handleAddNewPage, onChange, value}: any) {
+type SelectValue = {
+	id: number | string;
+	name: string;
+}
+
+export default function Select({handleAddNewPage, onChange, value}: SelectProps) {
 	const path = usePathname()
-	const [selected, setSelected] = useState({id: 0, name: "Select an option"})
-	const [data, setData] = useState([])
+	const [selected, setSelected] = useState<SelectValue>({id: 0, name: "Select an option"})
+	const [data, setData] = useState<SelectValue[] | []>([])
 
 	useEffect(() => {
-		if(!value) return;
+		if (!value) return;
 		setSelected(value)
-	},[value])
+	}, [value])
 
 	useEffect(() => {
 		const loadData = () => {
