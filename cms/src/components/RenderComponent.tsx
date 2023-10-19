@@ -13,11 +13,11 @@ export const RenderComponent = ({component, callBack, componentProps, contentId,
 		QuestionLayout: QuestionLayout
 	}
 
-	if (!components[component]) {
+	if (!components[component as keyof typeof components]) {
 		return;
 	}
 
-	const Component = components[component];
+	const Component = components[component as keyof typeof components];
 
 	return (<Component callBack={callBack} {...componentProps} contentId={contentId} order={order}/>)
 };

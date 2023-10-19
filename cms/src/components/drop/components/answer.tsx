@@ -1,7 +1,7 @@
 import {ChangeEvent, useEffect, useState} from "react";
 import {ArrowUpTrayIcon, TrashIcon} from "@heroicons/react/24/outline";
 import {OnContentChange} from "@/_types/onContentChange";
-import Select from "@/components/Select";
+import QuestionSelect from "@/components/drop/components/_partials/questionSelect";
 
 type AnswerProps = {
 	id: string;
@@ -53,7 +53,7 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 				 >
 					 {placeholder}
 				 </p>
-				 <Select
+				 <QuestionSelect
 						value={redirect}
 						handleAddNewPage={handleAddNewPage}
 						onChange={(val) => {

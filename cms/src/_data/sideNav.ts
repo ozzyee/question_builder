@@ -1,10 +1,10 @@
 import {FaQuestion} from "react-icons/fa";
 import {DocumentIcon} from "@heroicons/react/24/outline";
 import {WindowIcon} from "@heroicons/react/20/solid";
-import {SideNavNavigation, SideNavTiles} from "@/_types/sideNav";
+import {SideNavNavigation, TSideNavTiles} from "@/_types/sideNav";
 
 
-const layoutTiles: SideNavTiles[] = [
+const layoutTiles: TSideNavTiles[] = [
 	{
 		name: "Question",
 		icon: FaQuestion,

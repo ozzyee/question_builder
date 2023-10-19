@@ -1,9 +1,9 @@
 "use client";
 
-import MainLayout from "@/components/mainLayout";
+import Index from "@/components/layout/mainLayout";
 
 export default function Page() {
 	return (
-		 <MainLayout/>
+		 <Index/>
 	)
 }

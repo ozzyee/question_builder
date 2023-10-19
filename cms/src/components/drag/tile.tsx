@@ -3,7 +3,7 @@ import {WindowIcon} from "@heroicons/react/20/solid";
 
 type TileProps = {
 	name: string,
-	Icon: typeof WindowIcon
+	Icon: any,
 	componentType: string
 }
 

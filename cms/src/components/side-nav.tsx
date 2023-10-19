@@ -5,18 +5,20 @@ import {tiles} from "@/_data/sideNav";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import LocalStorage from "@/functions/localStorage";
 import {projectKey} from "@/_data/defaults";
+import {TSideNavTiles} from "@/_types/sideNav";
 
 const SideNav = () => {
 	const router = useRouter()
 	const path = usePathname()
 	const params = useSearchParams()
-	const [_tiles, setTiles] = useState([]);
+	const [_tiles, setTiles] = useState<TSideNavTiles[] | null>(null);
 	const [title, setTitle] = useState("");
 	const panel = params.get("panel")
 
 	useEffect(() => {
 		if (!panel) return;
-		setTiles(tiles[panel])
+		const panelTiles = tiles[panel as keyof typeof tiles]
+		setTiles(panelTiles)
 		setTitle(panel.charAt(0).toUpperCase() + panel.slice(1))
 	}, [params, router, path]);
 
@@ -31,6 +33,7 @@ const SideNav = () => {
 				link: `/${page}`
 			}
 		})
+
 		setTiles(pages)
 	}, [router, panel, path]);
 
@@ -41,7 +44,7 @@ const SideNav = () => {
 					 {title}
 				 </h2>
 				 <div className={"flex flex-wrap pt-5"}>
-					 {_tiles.map(({name, icon, componentType, tileType, link}) => {
+					 {_tiles?.map(({name, icon, componentType, tileType, link}) => {
 						 const click = () => {
 							 router.push(`${link}?panel=${params.get("panel")}`)
 						 }
@@ -53,6 +56,8 @@ const SideNav = () => {
 									</>
 							 )
 						 }
+
+						 if (!componentType || !name || !icon) return null;
 
 						 return <Tile Icon={icon} name={name} componentType={componentType} key={name}/>
 					 })}

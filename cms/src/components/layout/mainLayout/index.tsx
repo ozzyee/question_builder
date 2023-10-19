@@ -6,25 +6,26 @@ import {Popup} from "@/components/popup";
 import {v4 as uuidv4} from "uuid";
 import {RenderComponent} from "@/components/RenderComponent";
 import {projectKey} from "@/_data/defaults";
+import {Component} from "@/components/layout/mainLayout/types/component";
 
-function MainLayout({page}: { page?: string }) {
+function Index({page}: { page?: string }) {
+	const {drop, allowDrop} = DragAndDrop;
 	const router = useRouter()
 	const params = useSearchParams()
-	const [components, setComponents] = useState([])
+	const [components, setComponents] = useState<Component[]>([])
 	const [json, setJson] = useState<null | object>(null)
-	const {drop, allowDrop} = DragAndDrop;
 	const [isPopUoOpen, setIsPopUpOpen] = useState(false)
 
 
 	useEffect(() => {
 		const localData = LocalStorage.onLoad("test-project") || {}
-		const pageJson = localData[page]
+		const pageJson = localData[page as keyof typeof localData]
 
 
 		if (!pageJson) return;
 
 		const componentsData = Object.keys(pageJson).map((key) => {
-			const data = pageJson[key]
+			const data = pageJson[key as keyof typeof localData]
 			return {
 				component: data.componentType,
 				contentId: data.id,
@@ -45,14 +46,12 @@ function MainLayout({page}: { page?: string }) {
 		const oldPageName = page?.length ? page[0] : ""
 		let newPageName = pageName?.split(" ").length > 1 ? pageName.split(" ").join("-") : pageName
 
-		if(!newPageName){
+		if (!newPageName) {
 			newPageName = `new-${uuidv4()}`
 		}
 
-
 		delete localData[oldPageName]
 		localData[newPageName] = json
-
 
 		LocalStorage.onSave(projectKey, localData)
 		const url = `/${pageName.split(" ").join("-") || newPageName}?panel=${params.get("panel")}`
@@ -92,6 +91,9 @@ function MainLayout({page}: { page?: string }) {
 						id={"dropzone"}
 						onDrop={(ev) => {
 							const droppedComponent = drop(ev)
+
+							if(!droppedComponent) return;
+
 							setComponents([...components, {
 								component: droppedComponent,
 								contentId: uuidv4(),
@@ -105,7 +107,6 @@ function MainLayout({page}: { page?: string }) {
 						 return (
 								<RenderComponent
 									 component={component}
-									 onSave={onPageSaveButtonClick}
 									 callBack={(content) => {
 										 if (!content.id || !content.data) return;
 
@@ -116,7 +117,7 @@ function MainLayout({page}: { page?: string }) {
 											 }
 										 })
 
-										 if (content.save) {
+										 if (content.save && page?.length) {
 											 onSave(page[0] || "temp-page", "/?panel=layouts")
 										 }
 									 }}
@@ -136,4 +137,4 @@ function MainLayout({page}: { page?: string }) {
 	)
 }
 
-export default MainLayout;
+export default Index;

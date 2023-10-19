@@ -9,7 +9,7 @@ import {TType} from "ts-interface-checker";
 
 type SelectProps = {
 	handleAddNewPage: () => void;
-	onChange: (val: TType) => void;
+	onChange: (val:  SelectValue) => void;
 	value: SelectValue
 }
 
@@ -18,7 +18,7 @@ type SelectValue = {
 	name: string;
 }
 
-export default function Select({handleAddNewPage, onChange, value}: SelectProps) {
+export default function QuestionSelect({handleAddNewPage, onChange, value}: SelectProps) {
 	const path = usePathname()
 	const [selected, setSelected] = useState<SelectValue>({id: 0, name: "Select an option"})
 	const [data, setData] = useState<SelectValue[] | []>([])
