@@ -11,10 +11,12 @@ export const handleAddAnswer = ({answers, setAnswers, setAnswerHistory, setRawQu
 	const newAnswer = makeNewAnswer();
 	setAnswers([...answers, newAnswer]);
 	setAnswerHistory((prevHistory) => {
-		if(!prevHistory) return [newAnswer];
+		if (!prevHistory) return [newAnswer];
 		return [...prevHistory, newAnswer]
 	});
 	setRawQuestionJson((prevJson) => {
+		if (!prevJson) return null;
+
 		return {
 			...prevJson,
 			answers: [

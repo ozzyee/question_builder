@@ -20,8 +20,8 @@ function QuestionLayout({
 	order,
 }: QuestionLayoutProps) {
 	const [answers, setAnswers] = useState<TAnswer[]>([]);
-	const [answerHistory, setAnswerHistory] = useState<TAnswer[]>([]);
-	const [rawQuestionJson, setRawQuestionJson] = useState<RawQuestionLayoutJson>(null);
+	const [answerHistory, setAnswerHistory] = useState<TAnswer[] | null>(null);
+	const [rawQuestionJson, setRawQuestionJson] = useState<RawQuestionLayoutJson | null>(null);
 
 	useEffect(() => {
 		if (!subHeading && !heading && !_answers) {
@@ -43,7 +43,10 @@ function QuestionLayout({
 		}
 
 		setAnswers(_answers)
+
 		setRawQuestionJson({
+			contentId,
+			order,
 			heading: heading,
 			subHeading: subHeading,
 			answers: _answers
@@ -85,6 +88,7 @@ function QuestionLayout({
 							id: evt.id,
 							component: evt.component,
 							content: evt.content,
+							rawQuestionJson,
 							setRawQuestionJson,
 						})
 					}}
@@ -109,6 +113,7 @@ function QuestionLayout({
 										 component: evt.component,
 										 content: evt.content,
 										 redirect: evt.redirect,
+										 rawQuestionJson,
 										 setRawQuestionJson,
 									 })
 								 }}

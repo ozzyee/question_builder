@@ -9,7 +9,7 @@ export interface QuestionLayoutProps extends RawQuestionLayoutJson {
 		contentId,
 		save
 	}: {
-		data: RawQuestionLayoutJson
+		data: RawQuestionLayoutJson | null
 		componentType: string
 		id: string
 		order: number
