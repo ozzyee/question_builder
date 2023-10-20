@@ -96,8 +96,8 @@ function QuestionLayout({
 					}}
 					customValues={{
 						values: {
-							heading,
-							subHeading
+							heading: heading || "",
+							subHeading: subHeading || ""
 						}
 					}}
 			 />

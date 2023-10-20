@@ -30,18 +30,26 @@ function OutcomeLayout() {
 						subHeading: "Sub Heading"
 					}}
 					id={"headings"}
-					onContentChange={() => {}}
+					onContentChange={() => {
+					}}
+					customValues={{
+						values: {
+							heading: "",
+							subHeading: ""
+						}
+					}}
 			 />
 			 <div>
 				 {components?.map((component, index) => {
 					 return (
-						 <ComponentSelector
-								key={index}
-								component={component}
-								placeholder={""}
-								id={component}
-								onContentChange={() => {}}
-						 />
+							<ComponentSelector
+								 key={index}
+								 component={component}
+								 placeholder={""}
+								 id={component}
+								 onContentChange={() => {
+								 }}
+							/>
 					 )
 				 })}
 			 </div>
