@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Heading} from "@/components/drop/components/heading";
+import {Headings} from "@/components/drop/components/headings";
 import {Answer} from "@/components/drop/components/answer";
 import {v4 as uuidv4} from "uuid";
 import {QuestionLayoutProps} from "@/components/drop/_types/QuestionLayoutProps";
@@ -81,8 +81,8 @@ function QuestionLayout({
 			 <ComponentSelector
 					component={"headings"}
 					placeholder={{
-						heading: heading || placeholders.heading,
-						subHeading: subHeading || placeholders.subHeading
+						heading: placeholders.heading,
+						subHeading: placeholders.subHeading
 					}}
 					id={uuidv4()}
 					onContentChange={(evt) => {
@@ -93,6 +93,12 @@ function QuestionLayout({
 							rawQuestionJson,
 							setRawQuestionJson,
 						})
+					}}
+					customValues={{
+						values: {
+							heading,
+							subHeading
+						}
 					}}
 			 />
 
@@ -120,7 +126,7 @@ function QuestionLayout({
 										 setRawQuestionJson,
 									 })
 								 }}
-								 placeholder={answer.value || placeholders.answer}
+								 placeholder={placeholders.answer}
 								 customValues={{
 									 redirect: answer.redirect,
 									 handleAddNewPage

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Heading} from "@/components/drop/components/heading";
+import {Headings} from "@/components/drop/components/headings";
 import {MultiSelectButton, MultiSelectButtonItems} from "@/components/MultiSelectButton";
 import {ComponentSelector} from "@/components/drop/components";
+import {Components} from "@/components/drop/_types/Components";
 
 const _items = [
 	{name: 'Add Form', component: "form"},
@@ -21,25 +22,28 @@ function OutcomeLayout() {
 	}
 
 	return (
-		 <div>
-			 <Heading id={""} onContentChange={() => {
-			 }} placeholders={{
-				 heading: "Title",
-				 subHeading: "Subtitle",
-			 }}/>
+		 <div className={"p-4"}>
+			 <ComponentSelector
+					component={"headings"}
+					placeholder={{
+						heading: "Heading",
+						subHeading: "Sub Heading"
+					}}
+					id={"headings"}
+					onContentChange={() => {}}
+			 />
 			 <div>
-				 {
-					 components?.map((component, index) => {
-						 return (
-								<ComponentSelector
-									 key={index}
-									 component={component}
-									 onComponentChange={(component) => {
-									 }}
-								/>
-						 )
-					 })
-				 }
+				 {components?.map((component, index) => {
+					 return (
+						 <ComponentSelector
+								key={index}
+								component={component}
+								placeholder={""}
+								id={component}
+								onContentChange={() => {}}
+						 />
+					 )
+				 })}
 			 </div>
 			 <MultiSelectButton items={items} title={"Add Component"} onItemSelect={onItemSelect}/>
 		 </div>

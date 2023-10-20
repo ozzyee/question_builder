@@ -1,6 +1,6 @@
 import React from "react";
 import {Answer} from "@/components/drop/components/answer";
-import {Heading} from "@/components/drop/components/heading";
+import {Headings} from "@/components/drop/components/headings";
 import {ComponentSelectorProps} from "@/components/drop/_types/Components";
 
 export const Form = () => {
@@ -14,7 +14,7 @@ export const Text = () => {
 export function ComponentSelector({component, placeholder, id, onContentChange, onDelete, customValues}: ComponentSelectorProps) {
 	const components: { [k: string]: any } = {
 		answer: Answer,
-		headings: Heading,
+		headings: Headings,
 		form: Form,
 		text: Text,
 	}

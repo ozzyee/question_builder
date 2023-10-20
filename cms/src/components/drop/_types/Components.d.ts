@@ -1,6 +1,7 @@
 import {OnContentChange} from "@/_types/onContentChange";
 
-type Components = "form" | "text" | "headings" | "answer"
+export type Components = "form" | "text" | "headings" | "answer"
+export type CustomValues = function | string | number | boolean
 
 type ComponentSelectorProps = {
 	component: Components,
@@ -10,6 +11,6 @@ type ComponentSelectorProps = {
 	id: string,
 	onContentChange: OnContentChange
 	onDelete?: (id: string) => void
-	customValues?: {[k: string]: any}
+	customValues?: { [k: string]: CustomValues }
 }
 

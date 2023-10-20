@@ -64,19 +64,26 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 				 </button>
 				 {/* todo: add this back in once ready to upload files */}
 				 {/*<ArrowUpTrayIcon width={24}/>*/}
-				 <p
-						contentEditable={true}
-						onInput={(ev: ChangeEvent<HTMLParagraphElement>) => {
-							setData({
-								...data,
-								id: id,
-								content: ev.target.innerText,
-								component: "answer"
-							})
-						}}
-				 >
-					 {placeholder}
-				 </p>
+				 {/*<p*/}
+					{/*	contentEditable={true}*/}
+					{/*	onInput={(ev: ChangeEvent<HTMLParagraphElement>) => {*/}
+					{/*		setData({*/}
+					{/*			...data,*/}
+					{/*			id: id,*/}
+					{/*			content: ev.target.innerText,*/}
+					{/*			component: "answer"*/}
+					{/*		})*/}
+					{/*	}}*/}
+				 {/*>*/}
+					{/* {placeholder}*/}
+				 {/*</p>*/}
+
+				 <input
+						type="text"
+						className={"w-full h-10 p-2"}
+						placeholder={placeholder}
+				  />
+
 				 <DropDown
 						value={redirect}
 						onClick={handleAddNewPage}
