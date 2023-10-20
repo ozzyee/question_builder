@@ -1,4 +1,4 @@
-import {Question, QuestionObj} from "@/types/question";
+import {Question, QuestionObj} from "@/_types/question";
 
 export const _questionsData: QuestionObj = {
   "question_1": {

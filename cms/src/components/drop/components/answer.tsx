@@ -1,7 +1,10 @@
 import {ChangeEvent, useEffect, useState} from "react";
 import {ArrowUpTrayIcon, TrashIcon} from "@heroicons/react/24/outline";
 import {OnContentChange} from "@/_types/onContentChange";
-import QuestionSelect from "@/components/drop/components/_partials/questionSelect";
+import DropDown, {SelectValue} from "@/components/dropDown";
+import LocalStorage from "@/functions/localStorage";
+import {projectKey} from "@/_data/defaults";
+import {usePathname} from "next/navigation";
 
 type AnswerProps = {
 	id: string;
@@ -13,7 +16,9 @@ type AnswerProps = {
 }
 
 export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNewPage, redirect}: AnswerProps) => {
+	const path = usePathname()
 	const [data, setData] = useState<any>(null);
+	const [pages, setPages] = useState<SelectValue[] | null>(null);
 
 	useEffect(() => {
 		if (!data) return;
@@ -24,6 +29,25 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 			component: data.component,
 		});
 	}, [data]);
+
+	useEffect(() => {
+		const loadData = () => {
+			const data = LocalStorage.onLoad(projectKey) || {};
+			if (!data) return;
+
+			delete data[path.split("/")[1]]
+
+			const _data = Object.keys(data).map((key, index) => {
+				return {
+					id: index + 1,
+					name: key.split("-").join(" ")
+				}
+			})
+
+			setPages(_data);
+		}
+		loadData();
+	}, [])
 
 	return (
 		 <div className={"p-1"} id={id}>
@@ -53,9 +77,11 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 				 >
 					 {placeholder}
 				 </p>
-				 <QuestionSelect
+				 <DropDown
 						value={redirect}
-						handleAddNewPage={handleAddNewPage}
+						onClick={handleAddNewPage}
+						hasButton={true}
+						buttonText={"Add New Page"}
 						onChange={(val) => {
 							setData({
 								...data,
@@ -64,6 +90,7 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 								component: "answer"
 							})
 						}}
+						data={pages}
 				 />
 			 </div>
 		 </div>

@@ -5,48 +5,28 @@ import LocalStorage from "@/functions/localStorage";
 import {usePathname} from "next/navigation";
 import {projectKey} from "@/_data/defaults";
 import {classNames} from "@/functions/_helper/tailwind";
-import {TType} from "ts-interface-checker";
 
 type SelectProps = {
-	handleAddNewPage: () => void;
-	onChange: (val:  SelectValue) => void;
+	data: SelectValue[] | null;
+	onClick?: () => void;
+	onChange: (val: SelectValue) => void;
 	value: SelectValue
+	hasButton?: boolean;
+	buttonText?: string;
 }
 
-type SelectValue = {
+export type SelectValue = {
 	id: number | string;
 	name: string;
 }
 
-export default function QuestionSelect({handleAddNewPage, onChange, value}: SelectProps) {
-	const path = usePathname()
+export default function DropDown({data, onClick, onChange, value, buttonText, hasButton}: SelectProps) {
 	const [selected, setSelected] = useState<SelectValue>({id: 0, name: "Select an option"})
-	const [data, setData] = useState<SelectValue[] | []>([])
 
 	useEffect(() => {
 		if (!value) return;
 		setSelected(value)
 	}, [value])
-
-	useEffect(() => {
-		const loadData = () => {
-			const data = LocalStorage.onLoad(projectKey) || {};
-			if (!data) return;
-
-			delete data[path.split("/")[1]]
-
-			const _data = Object.keys(data).map((key, index) => {
-				return {
-					id: index + 1,
-					name: key.split("-").join(" ")
-				}
-			})
-
-			setData(_data);
-		}
-
-		loadData();
-	}, [])
 
 	return (
 		 <Listbox value={selected} onChange={(val) => {
@@ -106,14 +86,15 @@ export default function QuestionSelect({handleAddNewPage, onChange, value}: Sele
 											 )}
 										 </Listbox.Option>
 									))}
-									{/*	button to add a new page  */}
-									<div
-										 className={'relative cursor-default select-none py-2 pl-8 pr-4'}
-									>
-										<button onClick={handleAddNewPage} className={"text-indigo-600 hover:text-indigo-900"}>Add a new
-											page
-										</button>
-									</div>
+									{hasButton && (
+										 <div
+												className={'relative cursor-default select-none py-2 pl-8 pr-4'}
+										 >
+											 <button onClick={onClick} className={"text-indigo-600 hover:text-indigo-900"}>
+												 {buttonText}
+											 </button>
+										 </div>
+									)}
 								</Listbox.Options>
 							</Transition>
 						</div>

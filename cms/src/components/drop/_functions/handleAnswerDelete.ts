@@ -1,5 +1,5 @@
-import {TAnswer} from "@/components/drop/layouts/question-layout/types/Answers";
-import {SetAnswerHistory, SetAnswers, SetRawQuestionJson} from "@/components/drop/layouts/question-layout/types/state";
+import {TAnswer} from "@/components/drop/_types/Answers";
+import {SetAnswerHistory, SetAnswers, SetRawQuestionJson} from "@/components/drop/_types/state";
 
 export const handleAnswerDelete = ({id, answers, setAnswers, setAnswerHistory, setRawQuestionJson}: OnAnswerDelete) => {
 	const updatedAnswers = answers.filter((answer) => answer.id !== id);

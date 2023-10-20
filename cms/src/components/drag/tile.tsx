@@ -1,5 +1,4 @@
 import {DragAndDrop} from "@/functions/dragAndDrop";
-import {WindowIcon} from "@heroicons/react/20/solid";
 
 type TileProps = {
 	name: string,
@@ -9,7 +8,7 @@ type TileProps = {
 
 export const Tile = ({name, Icon, componentType}: TileProps) => {
 	return (
-		 <div className={"flex-item w-[50%] p-1"}>
+		 <div className={"flex-item w-[50%] p-1 cursor-grab"}>
 			 <div
 					data-component-type={componentType}
 					onDragStart={DragAndDrop.drag}

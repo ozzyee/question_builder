@@ -1,5 +1,5 @@
-import {RawQuestionLayoutJson} from "@/components/drop/layouts/question-layout/types/RawQuestionLayoutJson";
-import {TAnswer} from "@/components/drop/layouts/question-layout/types/Answers";
+import {RawQuestionLayoutJson} from "@/components/drop/_types/RawQuestionLayoutJson";
+import {TAnswer} from "@/components/drop/_types/Answers";
 import React, {Dispatch, SetStateAction} from "react";
 
 export type SetRawQuestionJson = Dispatch<SetStateAction<RawQuestionLayoutJson | null>>

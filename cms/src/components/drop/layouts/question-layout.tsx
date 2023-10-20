@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Heading} from "@/components/drop/components/heading";
 import {Answer} from "@/components/drop/components/answer";
 import {v4 as uuidv4} from "uuid";
-import {QuestionLayoutProps} from "@/components/drop/layouts/question-layout/types/QuestionLayoutProps";
-import {RawQuestionLayoutJson} from "@/components/drop/layouts/question-layout/types/RawQuestionLayoutJson";
-import {placeholders} from "@/components/drop/layouts/question-layout/_data/placeholders";
-import {TAnswer} from "@/components/drop/layouts/question-layout/types/Answers";
-import {handleAnswerDelete} from "@/components/drop/layouts/question-layout/functions/handleAnswerDelete";
-import {handleAddAnswer, makeNewAnswer} from "@/components/drop/layouts/question-layout/functions/handleAddAnswer";
-import {handleChange} from "@/components/drop/layouts/question-layout/functions/handleChange";
+import {QuestionLayoutProps} from "@/components/drop/_types/QuestionLayoutProps";
+import {RawQuestionLayoutJson} from "@/components/drop/_types/RawQuestionLayoutJson";
+import {placeholders} from "@/components/drop/_data/placeholders";
+import {TAnswer} from "@/components/drop/_types/Answers";
+import {handleAnswerDelete} from "@/components/drop/_functions/handleAnswerDelete";
+import {handleAddAnswer, makeNewAnswer} from "@/components/drop/_functions/handleAddAnswer";
+import {handleChange} from "@/components/drop/_functions/handleChange";
 
 
 function QuestionLayout({

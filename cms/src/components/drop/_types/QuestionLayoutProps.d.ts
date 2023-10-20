@@ -1,4 +1,4 @@
-import {RawQuestionLayoutJson} from "@/components/drop/layouts/question-layout/types/RawQuestionLayoutJson";
+import {RawQuestionLayoutJson} from "@/components/drop/_types/RawQuestionLayoutJson";
 
 export interface QuestionLayoutProps extends RawQuestionLayoutJson {
 	callBack: ({

@@ -1,6 +1,6 @@
 import {OnContentChangeEvent} from "@/_types/onContentChange";
-import {SetRawQuestionJson} from "@/components/drop/layouts/question-layout/types/state";
-import {RawQuestionLayoutJson} from "@/components/drop/layouts/question-layout/types/RawQuestionLayoutJson";
+import {SetRawQuestionJson} from "@/components/drop/_types/state";
+import {RawQuestionLayoutJson} from "@/components/drop/_types/RawQuestionLayoutJson";
 
 export const handleChange = ({
 	id,

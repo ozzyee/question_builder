@@ -1,7 +1,7 @@
 import {v4 as uuidv4} from "uuid";
-import {placeholders} from "@/components/drop/layouts/question-layout/_data/placeholders";
-import {TAnswer} from "@/components/drop/layouts/question-layout/types/Answers";
-import {SetAnswerHistory, SetAnswers, SetRawQuestionJson} from "@/components/drop/layouts/question-layout/types/state";
+import {placeholders} from "@/components/drop/_data/placeholders";
+import {TAnswer} from "@/components/drop/_types/Answers";
+import {SetAnswerHistory, SetAnswers, SetRawQuestionJson} from "@/components/drop/_types/state";
 
 export const makeNewAnswer = () => {
 	return {id: uuidv4(), value: placeholders.answer};

@@ -4,7 +4,7 @@ import {DragAndDrop} from "@/functions/dragAndDrop";
 import LocalStorage from "@/functions/localStorage";
 import {Popup} from "@/components/popup";
 import {v4 as uuidv4} from "uuid";
-import {RenderComponent} from "@/components/RenderComponent";
+import {RenderComponent} from "@/components/layout/components/RenderComponent";
 import {projectKey} from "@/_data/defaults";
 import {Component} from "@/components/layout/mainLayout/types/component";
 
