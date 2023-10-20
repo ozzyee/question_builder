@@ -9,6 +9,7 @@ import {TAnswer} from "@/components/drop/_types/Answers";
 import {handleAnswerDelete} from "@/components/drop/_functions/handleAnswerDelete";
 import {handleAddAnswer, makeNewAnswer} from "@/components/drop/_functions/handleAddAnswer";
 import {handleChange} from "@/components/drop/_functions/handleChange";
+import {ComponentSelector} from "@/components/drop/components";
 
 
 function QuestionLayout({
@@ -77,8 +78,9 @@ function QuestionLayout({
 
 	return (
 		 <div>
-			 <Heading
-					placeholders={{
+			 <ComponentSelector
+					component={"headings"}
+					placeholder={{
 						heading: heading || placeholders.heading,
 						subHeading: subHeading || placeholders.subHeading
 					}}
@@ -97,7 +99,8 @@ function QuestionLayout({
 			 <div id={"answers"} className={"flex flex-wrap"}>
 				 {answers.map((answer) => {
 					 return (
-							<Answer
+							<ComponentSelector
+								 component={"answer"}
 								 key={answer.id}
 								 id={answer.id}
 								 onDelete={() => handleAnswerDelete({
@@ -118,8 +121,11 @@ function QuestionLayout({
 									 })
 								 }}
 								 placeholder={answer.value || placeholders.answer}
-								 handleAddNewPage={handleAddNewPage}
-								 redirect={answer.redirect}/>
+								 customValues={{
+									 redirect: answer.redirect,
+									 handleAddNewPage
+								 }}
+							/>
 					 )
 				 })}
 			 </div>

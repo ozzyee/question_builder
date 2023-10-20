@@ -4,13 +4,13 @@ import {ChangeEvent} from "react";
 type HeadingProps = {
 	id: string;
 	onContentChange: OnContentChange
-	placeholders: {
+	placeholder: {
 		heading: string,
 		subHeading: string
 	}
 }
 
-export const Heading = ({onContentChange, id, placeholders}: HeadingProps) => {
+export const Heading = ({onContentChange, id, placeholder}: HeadingProps) => {
 	return (
 		 <div data-component={"heading"} id={id}>
 			 <h1
@@ -24,7 +24,7 @@ export const Heading = ({onContentChange, id, placeholders}: HeadingProps) => {
 					className="text-4xl font-bold text-gray-800"
 					contentEditable={true}
 			 >
-				 {placeholders.heading}
+				 {placeholder.heading}
 			 </h1>
 			 <h2
 					className="text-2xl font-bold text-gray-800"
@@ -37,7 +37,7 @@ export const Heading = ({onContentChange, id, placeholders}: HeadingProps) => {
 						});
 					}}
 			 >
-				 {placeholders.subHeading}
+				 {placeholder.subHeading}
 			 </h2>
 		 </div>
 	)

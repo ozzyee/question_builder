@@ -1,17 +1,38 @@
 import React from "react";
+import {Answer} from "@/components/drop/components/answer";
+import {Heading} from "@/components/drop/components/heading";
+import {ComponentSelectorProps} from "@/components/drop/_types/Components";
 
-export function ComponentSelector({component, onComponentChange}: ComponentSelectorProps) {
-	if (component === "form") {
-		return (
-			 <p>im a form</p>
-		)
+export const Form = () => {
+	return <p>form...</p>
+}
+
+export const Text = () => {
+	return <p>text...</p>
+}
+
+export function ComponentSelector({component, placeholder, id, onContentChange, onDelete, customValues}: ComponentSelectorProps) {
+	const components: { [k: string]: any } = {
+		answer: Answer,
+		headings: Heading,
+		form: Form,
+		text: Text,
 	}
 
-	if (component === "text") {
-		return (
-			 <p>im a text</p>
-		)
+	if (!components[component]) {
+		console.error(`no component found with name of ${component}`)
+		return null
 	}
 
-	return null
+	const Component = components[component]
+
+	const props = {
+		placeholder: placeholder || "",
+		id: id,
+		onContentChange,
+		onDelete,
+		...customValues
+	}
+
+	return <Component {...props}/>
 }
