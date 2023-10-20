@@ -7,29 +7,29 @@ import {BiLogOutCircle} from "react-icons/bi";
 
 const layoutTiles: TSideNavTiles[] = [
 	{
-		name: "Question",
+		name: "Question layout",
 		icon: FaQuestion,
 		componentType: "QuestionLayout",
 	},
 	{
-		name: "Outcome",
+		name: "Outcome layout",
 		icon: BiLogOutCircle,
 		componentType: "OutcomeLayout",
 	}
 ]
 
 export const tiles = {
-	components: [],
+	components: layoutTiles,
 	layouts: layoutTiles,
 	pages: []
 }
 
 export const navigation: SideNavNavigation[] = [
 	{
-		name: "Layouts",
-		href: '?panel=layouts',
+		name: "Components",
+		href: '?panel=components',
 		icon: WindowIcon,
-		panel: 'layouts',
+		panel: 'components',
 	},
 	{
 		name: "Pages",

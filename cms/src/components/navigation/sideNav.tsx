@@ -13,7 +13,7 @@ export const SideNav = () => {
 	const router = useRouter()
 	const path = usePathname()
 	const params = useSearchParams()
-	const [_tiles, setTiles] = useState<TSideNavTiles[] | null>(null);
+	const [_tiles, setTiles] = useState<any[] | null>(null);
 	const [title, setTitle] = useState("");
 	const panel = params.get("panel")
 
