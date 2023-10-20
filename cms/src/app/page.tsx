@@ -1,11 +1,8 @@
-"use client";
-
-import MainLayout from "@/components/layout/mainLayout";
-import OutcomeLayout from "@/components/drop/layouts/outcome-layout";
+import {RenderScreen} from "@/components/drop/renderScreen";
+import {questionLayout} from "@/_data/layouts";
 
 export default function Page() {
 	return (
-		 <OutcomeLayout/>
-		 // <MainLayout/>
+		 <RenderScreen pageData={questionLayout}/>
 	)
 }

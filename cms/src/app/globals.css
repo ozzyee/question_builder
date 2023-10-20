@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-input {
+.no-outline:focus {
     border: none;
     outline: none;
+}
+
+.answer-delete-btn:hover {
+    color: #e53e3e;
 }

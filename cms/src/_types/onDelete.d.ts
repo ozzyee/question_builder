@@ -1,0 +1,1 @@
+export type OnDelete = (id: string) => void;

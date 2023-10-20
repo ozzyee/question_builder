@@ -1,7 +1,5 @@
 "use client";
 
-import Index from "@/components/layout/mainLayout";
-
 type PageProps = {
 	params: {
 		page: string
@@ -13,6 +11,6 @@ type PageProps = {
 
 export default function Page({params}: PageProps) {
 	return (
-		 <Index page={params.page}/>
+		 <></>
 	)
 }

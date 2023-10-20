@@ -1,24 +1,40 @@
-import {ChangeEvent, useEffect, useState} from "react";
-import {ArrowUpTrayIcon, TrashIcon} from "@heroicons/react/24/outline";
 import {OnContentChange} from "@/_types/onContentChange";
+import {OnDelete} from "@/_types/onDelete";
+import {OnClickAddNewPage} from "@/_types/onClickAddNewPage";
+import {usePathname} from "next/navigation";
+import React, {useEffect, useState} from "react";
+import {TrashIcon} from "@heroicons/react/24/outline";
 import DropDown, {SelectValue} from "@/components/dropDown";
 import LocalStorage from "@/functions/localStorage";
 import {projectKey} from "@/_data/defaults";
-import {usePathname} from "next/navigation";
+
+export type Redirect = {
+	id: string;
+	name: string;
+}
 
 type AnswerProps = {
 	id: string;
-	onDelete: (id: string) => void;
-	onContentChange: OnContentChange
 	placeholder: string;
-	handleAddNewPage: any;
-	redirect: any;
+	redirect: Redirect;
+	onContentChange: OnContentChange
+	onDelete: OnDelete;
+	onClickAddNewPage: OnClickAddNewPage;
+
+	// this is the value of the answer after the user has typed in the input
+	value: {
+		id: string;
+		content: string;
+		redirect: Redirect;
+	};
 }
 
-export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNewPage, redirect}: AnswerProps) => {
+export const Answer = ({id, placeholder, onContentChange, onClickAddNewPage, onDelete, value}: AnswerProps) => {
 	const path = usePathname()
 	const [data, setData] = useState<any>(null);
 	const [pages, setPages] = useState<SelectValue[] | null>(null);
+	const [inputValue, setInputValue] = useState<string>(value?.content || "");
+
 
 	useEffect(() => {
 		if (!data) return;
@@ -62,31 +78,26 @@ export const Answer = ({id, onDelete, onContentChange, placeholder, handleAddNew
 				 >
 					 <TrashIcon height={18} className={"answer-delete-btn"}/>
 				 </button>
-				 {/* todo: add this back in once ready to upload files */}
-				 {/*<ArrowUpTrayIcon width={24}/>*/}
-				 {/*<p*/}
-					{/*	contentEditable={true}*/}
-					{/*	onInput={(ev: ChangeEvent<HTMLParagraphElement>) => {*/}
-					{/*		setData({*/}
-					{/*			...data,*/}
-					{/*			id: id,*/}
-					{/*			content: ev.target.innerText,*/}
-					{/*			component: "answer"*/}
-					{/*		})*/}
-					{/*	}}*/}
-				 {/*>*/}
-					{/* {placeholder}*/}
-				 {/*</p>*/}
-
 				 <input
 						type="text"
-						className={"w-full h-10 p-2"}
+						className={"w-full h-10 p-2 no-outline"}
 						placeholder={placeholder}
-				  />
-
+						value={value?.content}
+						onChange={(evt) => {
+							setInputValue(evt.target.value);
+							setData({
+								id: id,
+								content: evt.target.value,
+								component: "answer",
+								customValues: {
+									redirect: value.redirect
+								}
+							});
+						}}
+				 />
 				 <DropDown
-						value={redirect}
-						onClick={handleAddNewPage}
+						value={value?.redirect}
+						onClick={onClickAddNewPage}
 						hasButton={true}
 						buttonText={"Add New Page"}
 						onChange={(val) => {
